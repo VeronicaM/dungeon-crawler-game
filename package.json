@@ -5,7 +5,9 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "webpack-dev-server"
+        "start": "webpack-dev-server",
+        "lint": "esw webpack.config.* components/** index.js",
+        "lint:watch": "npm run lint -- --watch"
     },
     "repository": {
         "type": "git",
@@ -31,7 +33,11 @@
         "style-loader": "^0.19.0",
         "url-loader": "^0.6.2",
         "webpack": "^3.7.1",
-        "webpack-dev-server": "^2.9.1"
+        "webpack-dev-server": "^2.9.1",
+        "eslint": "2.9.0",
+        "eslint-plugin-import": "1.6.1",
+        "eslint-plugin-react": "5.0.1",
+        "eslint-watch": "2.1.11"
     },
     "author": "Veronica Mihai",
     "license": "ISC",
