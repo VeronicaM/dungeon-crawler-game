@@ -3,10 +3,25 @@
 }
 
 .light {
+    background-color: transparent;
+}
+
+.wall {
     background-color: gray;
+}
+
+.floor {
+    background-color: pink;
 }
 
 .board {
     width: 800px;
     height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    span {
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+    }
 }
