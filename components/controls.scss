@@ -1,9 +1,13 @@
-div {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-}
-
-i {
-    padding: 10px;
+.controls {
+    b {
+        padding: 10px;
+    }
+    i {
+        padding: 10px;
+    }
+    div {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
 }

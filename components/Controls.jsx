@@ -6,10 +6,11 @@ const Controls = ({
     attack,
     level,
     nextLevel,
-    dungeon
+    dungeon,
+    onToggle
 }) => {
     return (
-        <div>
+        <div className="controls">
             <span>
                 <b>
                     Health:
@@ -55,7 +56,7 @@ const Controls = ({
                     {dungeon}
                 </i>
             </span>
-            <button>
+            <button onClick={onToggle}>
                 Toggle Darkness
             </button>
         </div>

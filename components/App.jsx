@@ -1,49 +1,32 @@
 import React from 'react';
 import '../app.scss';
 import Controls from './Controls.jsx';
-
+import Board from './Board.jsx';
+import {connect} from 'react-redux';
+import * as gameActions from '../actions/gameActions.js';
 class App extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this.state = initialState();
+        this.onToggleDarkness = this.onToggleDarkness.bind(this);
     }
-
+    onToggleDarkness(){
+        this.props.dispatch(gameActions.toggleDarkness());
+    }
     render() {
-        const {player} = this.state;
-        return (
+     return (
             <div className="mainContainer">
-                <Controls {...player}/>
+                <Controls {...this.props.player} onToggle ={this.onToggleDarkness}/>
+                <Board isDarkness ={this.props.isDarkness}/>
             </div>
         );
     }
 }
-App.weapons = [
-    {
-        name: "Stick",
-        attack: 10
-    }, {
-        name: "Dagger",
-        attack: 30
-    }, {
-        name: "Short Sword",
-        attack: 40
-    }, {
-        name: "Archangel's Sword",
-        attack: 100
-    }
-];
-const initialState = () => {
-    return new Object({
-        player: {
-            health: 180,
-            weapon: App.weapons[0].name,
-            attack: App.weapons[0].attack,
-            level: 0,
-            nextLevel: 100,
-            dungeon: 0
-        }
-    })
+
+function mapStateToProps(state, props){
+    return {
+        player : state.game.player,
+        isDarkness: state.game.isDarkness
+    };
 }
-export default App;
+export default connect(mapStateToProps)(App); 
