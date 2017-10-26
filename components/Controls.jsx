@@ -1,5 +1,6 @@
 import React from 'react';
 import './controls.scss';
+import PropTypes from 'prop-types';
 const Controls = ({
     health,
     weapon,
@@ -61,5 +62,14 @@ const Controls = ({
             </button>
         </div>
     );
-}
+};
 export default Controls;
+Controls.propTypes = {
+    health:PropTypes.number.isRequired,
+    weapon: PropTypes.string.isRequired,
+    attack: PropTypes.number.isRequired,
+    level:  PropTypes.number.isRequired,
+    nextLevel:  PropTypes.number.isRequired,
+    dungeon:  PropTypes.number.isRequired,
+    onToggle:  PropTypes.func.isRequired
+};

@@ -5,9 +5,11 @@ import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
 
 const store = configureStore();
-const element = < Provider store = { store } >
+const element = ( <
+    Provider store = { store } >
     <
     App / >
     <
-    /Provider>;
+    /Provider>
+);
 ReactDOM.render(element, document.getElementById('root'));

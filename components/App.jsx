@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {bindActionCreators} from 'redux';
 import '../app.scss';
 import Controls from './Controls.jsx';
 import Board from './Board.jsx';
 import {connect} from 'react-redux';
 import * as gameActions from '../actions/gameActions.js';
-import GameService from '../services/gameService.js';
+
 class App extends React.Component {
 
     constructor(props) {
@@ -13,10 +15,10 @@ class App extends React.Component {
         this.createBoard = this.createBoard.bind(this);
     }
     onToggleDarkness(){
-        this.props.dispatch(gameActions.toggleDarkness());
+        this.props.actions.toggleDarkness();
     }
     createBoard(){
-        this.props.dispatch(gameActions.createBoard());
+        this.props.actions.createBoard();
     }
     render() {
      return (
@@ -35,4 +37,15 @@ function mapStateToProps(state, props){
         board : state.game.board
     };
 }
-export default connect(mapStateToProps)(App); 
+function mapDispatchToProps(dispatch){
+    return {
+        actions :bindActionCreators(gameActions,dispatch)
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App); 
+App.propTypes = {
+    actions : PropTypes.object.isRequired,
+    player: PropTypes.object.isRequired,
+    isDarkness:PropTypes.bool.isRequired,
+    board: PropTypes.array.isRequired
+};

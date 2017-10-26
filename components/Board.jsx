@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './board.scss';
 
 const Board = (props) => {
@@ -10,5 +11,9 @@ const Board = (props) => {
            {board}
         </div>
     );
-}
+};
 export default Board;
+Board.propTypes = {
+    isDarkness:PropTypes.bool.isRequired,
+    board: PropTypes.array.isRequired
+};
