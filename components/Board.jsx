@@ -7,7 +7,7 @@ const Board = (props) => {
     darkness += props.isDarkness ? "dark" : "light";
     const board = props.board.map((cell,i)=> <span id={i} x={cell.x} y={cell.y} key={i} className={props.isDarkness ? "":cell.type}> </span>);
     return (
-        <div className ={darkness}>
+        <div className ={darkness} tabIndex="0" onKeyDown={(e)=>props.onPlayerMove(e)}>
            {board}
         </div>
     );

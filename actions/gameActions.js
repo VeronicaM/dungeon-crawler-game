@@ -1,4 +1,4 @@
-import * as types from '../constants.js';
+import * as types from '../constants/types.js';
 export function updateHealth(health) {
     return { type: types.UPDATE_HEALTH, health };
 }
@@ -14,4 +14,7 @@ export function createBoard() {
 
 export function updateGameLevel() {
     return { type: types.UPDATE_GAME_LEVEL };
+}
+export function setPlayerPosition(direction) {
+    return { type: types.MOVE_PLAYER };
 }

@@ -5,6 +5,7 @@ import '../app.scss';
 import Controls from './Controls.jsx';
 import Board from './Board.jsx';
 import {connect} from 'react-redux';
+import GameService from '../services/gameService.js';
 import * as gameActions from '../actions/gameActions.js';
 
 class App extends React.Component {
@@ -15,6 +16,7 @@ class App extends React.Component {
         this.onToggleDarkness = this.onToggleDarkness.bind(this);
         this.createBoard = this.createBoard.bind(this);
         this.updateGameLevel = this.updateGameLevel.bind(this);
+        this.onPlayerMove = this.onPlayerMove.bind(this);
     }
     onToggleDarkness(){
         this.props.actions.toggleDarkness();
@@ -25,11 +27,36 @@ class App extends React.Component {
     updateGameLevel(){
         this.props.actions.updateGameLevel();
     }
+    onPlayerMove(e){
+            const direction = e.key;
+            const cellIndex= GameService.movePlayer(
+                            direction, 
+                            this.props.player.position, 
+                            this.props.board);
+            const cellType = this.props.board[cellIndex];
+            switch (cellType) {
+                case 'enemy':
+                    break;
+                case 'health':
+                    break;
+                case 'weapon':
+                    break;
+                case 'floor':
+                     break;
+                default:
+                    break;
+            }
+    }
     render() {
      return (
             <div className="mainContainer">
                 <Controls {...this.props.player} onToggle ={this.onToggleDarkness}/>
-                <Board isDarkness ={this.props.isDarkness} board={this.props.board}/>
+                <Board
+                     isDarkness ={this.props.isDarkness} 
+                     board={this.props.board}
+                     onPlayerMove = {this.onPlayerMove}
+                />
+
             </div>
         );
     }

@@ -1,9 +1,10 @@
-import * as types from '../constants.js';
-import { weapons } from '../constants.js';
+import * as types from '../constants/types.js';
+import { weapons } from '../constants/gameConstants.js';
 import GameService from '../services/gameService.js';
+const initialBoardSettings = GameService.createBoard(0);
 const initialState = {
     isDarkness: true,
-    board: GameService.createBoard(0),
+    board: initialBoardSettings[0],
     level: 0,
     player: {
         health: 180,
@@ -11,7 +12,8 @@ const initialState = {
         attack: weapons[0].attack,
         level: 0,
         nextLevel: 100,
-        dungeon: 0
+        dungeon: 0,
+        position: initialBoardSettings[1]
     }
 };
 export default function gameReducer(state = initialState, action) {
