@@ -42,6 +42,15 @@ export default function gameReducer(state = initialState, action) {
             return {...state, level: state.level + 1 };
         case types.CREATE_BOARD:
             return {...state, board: GameService.createBoard(state.level) };
+        case types.MOVE_PLAYER:
+            return {
+                ...state,
+                board: GameService.updateBoard(state.board, action.index, state.player.position),
+                'player': {
+                    ...state.player,
+                    position: action.index
+                }
+            }
         default:
             return state;
     }

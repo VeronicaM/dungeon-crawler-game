@@ -43,7 +43,6 @@ const GameService = (() => {
     }
     const setPlayer = function(board) {
         let index = Math.floor(Math.random() * board.length);
-        debugger;
         board[index].type = "player";
         return board[index].y * gameConstants.BOARD_WIDTH + board[index].x;
     }
@@ -81,20 +80,30 @@ const GameService = (() => {
     const movePlayer = function(direction, playerPosition, board) {
         switch (direction) {
             case 'ArrowUp':
-                return playerPosition - gameConstants.BOARD_HEIGHT;
+                return playerPosition - gameConstants.BOARD_WIDTH;
             case 'ArrowDown':
-                return playerPosition + gameConstants.BOARD_HEIGHT;
+                return playerPosition + gameConstants.BOARD_WIDTH;
             case 'ArrowLeft':
-                return playerPosition + 1;
-            case 'ArrowRight':
                 return playerPosition - 1;
+            case 'ArrowRight':
+                return playerPosition + 1;
             default:
                 return playerPosition;
         }
     }
+    const updateBoard = function(board, index, playerOldPosition) {
+        const newBoard = [];
+        for (let i = 0; i < board.length; i++) {
+            newBoard[i] = Object.assign({}, board[i]);
+        }
+        newBoard[index].type = "player";
+        newBoard[playerOldPosition].type = "floor";
+        return newBoard;
+    }
     return {
         createBoard: createBoard,
-        movePlayer: movePlayer
+        movePlayer: movePlayer,
+        updateBoard: updateBoard
     };
 })();
 export default GameService;

@@ -11,10 +11,9 @@ export function toggleDarkness() {
 export function createBoard() {
     return { type: types.CREATE_BOARD };
 }
-
 export function updateGameLevel() {
     return { type: types.UPDATE_GAME_LEVEL };
 }
-export function setPlayerPosition(direction) {
-    return { type: types.MOVE_PLAYER };
+export function setPlayerPosition(index) {
+    return { type: types.MOVE_PLAYER, index };
 }

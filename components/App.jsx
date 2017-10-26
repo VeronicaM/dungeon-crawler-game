@@ -12,7 +12,7 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {board:this.props.board};
         this.onToggleDarkness = this.onToggleDarkness.bind(this);
         this.createBoard = this.createBoard.bind(this);
         this.updateGameLevel = this.updateGameLevel.bind(this);
@@ -33,7 +33,7 @@ class App extends React.Component {
                             direction, 
                             this.props.player.position, 
                             this.props.board);
-            const cellType = this.props.board[cellIndex];
+            const cellType = this.props.board[cellIndex].type;
             switch (cellType) {
                 case 'enemy':
                     break;
@@ -42,6 +42,7 @@ class App extends React.Component {
                 case 'weapon':
                     break;
                 case 'floor':
+                     this.props.actions.setPlayerPosition(cellIndex);
                      break;
                 default:
                     break;
