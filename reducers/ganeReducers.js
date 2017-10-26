@@ -3,7 +3,8 @@ import { weapons } from '../constants.js';
 import GameService from '../services/gameService.js';
 const initialState = {
     isDarkness: true,
-    board: GameService.createBoard(),
+    board: GameService.createBoard(0),
+    level: 0,
     player: {
         health: 180,
         weapon: weapons[0].name,
@@ -35,8 +36,10 @@ export default function gameReducer(state = initialState, action) {
             }
         case types.TOGGLE_DARKNESS:
             return {...state, isDarkness: !state.isDarkness };
+        case types.UPDATE_GAME_LEVEL:
+            return {...state, level: state.level + 1 };
         case types.CREATE_BOARD:
-            return {...state, board: GameService.createBoard() };
+            return {...state, board: GameService.createBoard(state.level) };
         default:
             return state;
     }

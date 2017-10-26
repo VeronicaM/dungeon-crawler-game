@@ -11,3 +11,7 @@ export function toggleDarkness() {
 export function createBoard() {
     return { type: types.CREATE_BOARD };
 }
+
+export function updateGameLevel() {
+    return { type: types.UPDATE_GAME_LEVEL };
+}

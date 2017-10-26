@@ -11,14 +11,19 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {};
         this.onToggleDarkness = this.onToggleDarkness.bind(this);
         this.createBoard = this.createBoard.bind(this);
+        this.updateGameLevel = this.updateGameLevel.bind(this);
     }
     onToggleDarkness(){
         this.props.actions.toggleDarkness();
     }
     createBoard(){
         this.props.actions.createBoard();
+    }
+    updateGameLevel(){
+        this.props.actions.updateGameLevel();
     }
     render() {
      return (
@@ -29,7 +34,12 @@ class App extends React.Component {
         );
     }
 }
-
+App.propTypes = {
+    actions : PropTypes.object.isRequired,
+    player: PropTypes.object.isRequired,
+    isDarkness:PropTypes.bool.isRequired,
+    board: PropTypes.array.isRequired
+};  
 function mapStateToProps(state, props){
     return {
         player : state.game.player,
@@ -43,9 +53,3 @@ function mapDispatchToProps(dispatch){
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App); 
-App.propTypes = {
-    actions : PropTypes.object.isRequired,
-    player: PropTypes.object.isRequired,
-    isDarkness:PropTypes.bool.isRequired,
-    board: PropTypes.array.isRequired
-};
