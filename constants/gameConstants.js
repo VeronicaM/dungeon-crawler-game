@@ -1,15 +1,15 @@
 export const weapons = [{
     name: "Stick",
-    attack: 10
+    attack: 3
 }, {
     name: "Dagger",
-    attack: 30
+    attack: 10
 }, {
     name: "Short Sword",
-    attack: 40
+    attack: 20
 }, {
     name: "Archangel's Sword",
-    attack: 100
+    attack: 30
 }];
 export const levels = [{
     rooms: [{

@@ -17,35 +17,35 @@ const GameService = (() => {
             board[index].type = "floor";
         }
 
-    }
+    };
     const setEnemies = function(board, entities, level) {
         for (let i = 0; i < gameConstants.ENEMIES_PER_BOARD; i++) {
             let index = Math.floor(Math.random() * board.length);
-            entities.push(Object.assign({}, board[index], { type: 'enemy', health: level * 2 + 10 }));
+            entities.push(Object.assign({}, board[index], { type: 'enemy', health: level * 20 + 10, attack: level * 2 + 5 }));
         }
-    }
+    };
     const setWeapons = function(board, entities, level) {
         for (let i = 0; i < gameConstants.WEAPON_PER_BOARD; i++) {
             let index = Math.floor(Math.random() * board.length);
-            entities.push(Object.assign({}, board[index], { type: 'weapon', weaopn: gameConstants.weapons[level + 1] }));
+            entities.push(Object.assign({}, board[index], { type: 'weapon', weapon: gameConstants.weapons[level + 1] }));
         }
-    }
+    };
     const setExit = function(board, entities) {
         let index = Math.floor(Math.random() * board.length);
         entities.push(Object.assign({}, board[index], { type: 'exit' }));
-    }
+    };
 
     const setHealth = function(board, entities) {
         for (let i = 0; i < gameConstants.HEALTH_POINTS_PER_BOARD; i++) {
             let index = Math.floor(Math.random() * board.length);
             entities.push(Object.assign({}, board[index], { type: 'health' }));
         }
-    }
+    };
     const setPlayer = function(board, entities) {
         let index = Math.floor(Math.random() * board.length);
         entities.push(Object.assign({}, board[index], { type: 'player' }));
         return board[index].y * gameConstants.BOARD_WIDTH + board[index].x;
-    }
+    };
     const populateBoard = function(board, entities, level) {
         setEnemies(getEmptySpaces(board), entities, level);
         setWeapons(getEmptySpaces(board), entities, level);
@@ -53,10 +53,10 @@ const GameService = (() => {
         setExit(getEmptySpaces(board), entities);
         let index = setPlayer(getEmptySpaces(board), entities);
         return index;
-    }
+    };
     const getEmptySpaces = function(board) {
         return board.filter((cell) => cell.type === "floor");
-    }
+    };
     const createBoard = function(level) {
 
         let board = [];
@@ -76,7 +76,7 @@ const GameService = (() => {
         }
         let playerPosition = populateBoard(board, entities, level);
         return [board, entities, playerPosition];
-    }
+    };
 
     const movePlayer = function(direction, playerPosition, board) {
         switch (direction) {
@@ -91,7 +91,7 @@ const GameService = (() => {
             default:
                 return playerPosition;
         }
-    }
+    };
     const updateBoard = function(entities, cell) {
         let newBoard = [].concat(entities);
         let playerIndex = 0;
@@ -105,17 +105,34 @@ const GameService = (() => {
             }
         });
         newBoard[playerIndex] = Object.assign({}, newBoard[playerIndex], { x: cell.x, y: cell.y });
-        if (cellIndex) {
+        if (cellIndex !== null) {
             newBoard.splice(cellIndex, 1);
         }
         return newBoard;
-    }
+    };
 
+    const attackEnemy = function(entities, cell, playerLevel, playerAttack) {
+        let newBoard = [].concat(entities);
+        let playerIndex = 0;
+        let cellIndex = null;
+        newBoard.forEach((entity, i) => {
+            if (entity.type === 'player') {
+                playerIndex = i;
+            }
+            if (entity.x === cell.x && entity.y === cell.y) {
+                cellIndex = i;
+            }
+        });
+        let attack = playerAttack + 5 * playerLevel;
+        newBoard[cellIndex] = Object.assign({}, newBoard[cellIndex], { health: (newBoard[cellIndex].health - attack) });
+        return newBoard;
+    };
 
     return {
         createBoard: createBoard,
         movePlayer: movePlayer,
-        updateBoard: updateBoard
+        updateBoard: updateBoard,
+        attackEnemy: attackEnemy
     };
 })();
 export default GameService;

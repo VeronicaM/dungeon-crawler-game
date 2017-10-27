@@ -47,6 +47,10 @@ class App extends React.Component {
 
         switch (cell.type) {
             case 'enemy':
+                this.props.actions.attackEnemy(cell);
+                if(cell.health <= 0){
+                    this.props.actions.setPlayerPosition(cell, cellIndex);
+                }
                 break;
             case 'health':
                 this.props.actions.updateHealth(gameConstants.HEALTH_PER_ITEM);

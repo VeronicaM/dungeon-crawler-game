@@ -52,6 +52,17 @@ export default function gameReducer(state = initialState, action) {
                     position: action.index
                 }
             }
+        case types.ATTACK_ENEMY:
+            return {
+                ...state,
+                entities: GameService.attackEnemy(state.entities, action.cell, state.player.level, state.player.attack),
+                'player': {
+                    ...state.player,
+                    health: state.player.health - action.cell.attack,
+                    nextLevel: (state.player.nextLevel - 10) === 0 ? 100 : (state.player.nextLevel - 10),
+                    level: (state.player.nextLevel - 10) === 0 ? state.player.level + 1 : state.player.level
+                }
+            }
         default:
             return state;
     }

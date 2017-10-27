@@ -17,3 +17,6 @@ export function updateGameLevel() {
 export function setPlayerPosition(cell, index) {
     return { type: types.MOVE_PLAYER, cell, index };
 }
+export function attackEnemy(cell) {
+    return { type: types.ATTACK_ENEMY, cell };
+}
