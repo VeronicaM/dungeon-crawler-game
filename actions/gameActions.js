@@ -20,3 +20,6 @@ export function setPlayerPosition(cell, index) {
 export function attackEnemy(cell) {
     return { type: types.ATTACK_ENEMY, cell };
 }
+export function startGame() {
+    return { type: types.START_GAME };
+}

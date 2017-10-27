@@ -69,6 +69,14 @@ class App extends React.Component {
     }
 
     render() {
+        if(this.props.gameOver){
+            return (  
+                <div>
+                    <div> Game Over ! Better luck next time </div>
+                    <button onClick ={this.props.actions.startGame}> Restart Game </button>
+                </div> 
+            )
+        }else
      return (
             <div className="mainContainer">
                 <Controls {...this.props.player} onToggle ={this.onToggleDarkness}/>
@@ -87,14 +95,17 @@ App.propTypes = {
     actions : PropTypes.object.isRequired,
     player: PropTypes.object.isRequired,
     isDarkness:PropTypes.bool.isRequired,
-    board: PropTypes.array.isRequired
+    board: PropTypes.array.isRequired,
+    entities: PropTypes.array.isRequired,
+    gameOver : PropTypes.bool.isRequired
 };  
 function mapStateToProps(state, props){
     return {
         player : state.game.player,
         isDarkness: state.game.isDarkness,
         entities: state.game.entities,
-        board : state.game.board
+        board : state.game.board,
+        gameOver : state.game.gameOver
     };
 }
 function mapDispatchToProps(dispatch){

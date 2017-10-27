@@ -7,6 +7,7 @@ const initialState = {
     board: initialBoardSettings[0],
     level: 0,
     entities: initialBoardSettings[1],
+    gameOver: false,
     player: {
         health: 180,
         weapon: weapons[0].name,
@@ -19,6 +20,8 @@ const initialState = {
 };
 export default function gameReducer(state = initialState, action) {
     switch (action.type) {
+        case types.START_GAME:
+            return initialState;
         case types.UPDATE_HEALTH:
             return {
                 ...state,
@@ -53,7 +56,7 @@ export default function gameReducer(state = initialState, action) {
                 }
             }
         case types.ATTACK_ENEMY:
-            return {
+            return (state.player.health - action.cell.attack) === 0 ? {...state, gameOver: true } : {
                 ...state,
                 entities: GameService.attackEnemy(state.entities, action.cell, state.player.level, state.player.attack),
                 'player': {
