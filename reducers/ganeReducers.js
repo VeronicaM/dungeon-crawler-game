@@ -6,6 +6,7 @@ const initialState = {
     isDarkness: true,
     board: initialBoardSettings[0],
     level: 0,
+    entities: initialBoardSettings[1],
     player: {
         health: 180,
         weapon: weapons[0].name,
@@ -13,7 +14,7 @@ const initialState = {
         level: 0,
         nextLevel: 100,
         dungeon: 0,
-        position: initialBoardSettings[1]
+        position: initialBoardSettings[2]
     }
 };
 export default function gameReducer(state = initialState, action) {
@@ -32,7 +33,7 @@ export default function gameReducer(state = initialState, action) {
                 ...state,
                 'player': {
                     ...state.player,
-                    weapon: action.health.weapon.name,
+                    weapon: action.weapon.name,
                     attack: action.weapon.attack
                 }
             }
@@ -45,7 +46,7 @@ export default function gameReducer(state = initialState, action) {
         case types.MOVE_PLAYER:
             return {
                 ...state,
-                board: GameService.updateBoard(state.board, action.index, state.player.position),
+                entities: GameService.updateBoard(state.entities, action.cell),
                 'player': {
                     ...state.player,
                     position: action.index

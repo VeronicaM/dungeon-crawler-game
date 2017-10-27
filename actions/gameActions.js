@@ -14,6 +14,6 @@ export function createBoard() {
 export function updateGameLevel() {
     return { type: types.UPDATE_GAME_LEVEL };
 }
-export function setPlayerPosition(index) {
-    return { type: types.MOVE_PLAYER, index };
+export function setPlayerPosition(cell, index) {
+    return { type: types.MOVE_PLAYER, cell, index };
 }

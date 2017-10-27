@@ -60,3 +60,4 @@ export const BOARD_HEIGHT = 40;
 export const ENEMIES_PER_BOARD = 10;
 export const WEAPON_PER_BOARD = 1;
 export const HEALTH_POINTS_PER_BOARD = 5;
+export const HEALTH_PER_ITEM = 10;

@@ -18,40 +18,40 @@ const GameService = (() => {
         }
 
     }
-    const setEnemies = function(board) {
+    const setEnemies = function(board, entities, level) {
         for (let i = 0; i < gameConstants.ENEMIES_PER_BOARD; i++) {
             let index = Math.floor(Math.random() * board.length);
-            board[index].type = "enemy";
+            entities.push(Object.assign({}, board[index], { type: 'enemy', health: level * 2 + 10 }));
         }
     }
-    const setWeapons = function(board) {
+    const setWeapons = function(board, entities, level) {
         for (let i = 0; i < gameConstants.WEAPON_PER_BOARD; i++) {
             let index = Math.floor(Math.random() * board.length);
-            board[index].type = "weapon";
+            entities.push(Object.assign({}, board[index], { type: 'weapon', weaopn: gameConstants.weapons[level + 1] }));
         }
     }
-    const setHealth = function(board) {
+    const setExit = function(board, entities) {
         let index = Math.floor(Math.random() * board.length);
-        board[index].type = "exit";
+        entities.push(Object.assign({}, board[index], { type: 'exit' }));
     }
 
-    const setExit = function(board) {
+    const setHealth = function(board, entities) {
         for (let i = 0; i < gameConstants.HEALTH_POINTS_PER_BOARD; i++) {
             let index = Math.floor(Math.random() * board.length);
-            board[index].type = "health";
+            entities.push(Object.assign({}, board[index], { type: 'health' }));
         }
     }
-    const setPlayer = function(board) {
+    const setPlayer = function(board, entities) {
         let index = Math.floor(Math.random() * board.length);
-        board[index].type = "player";
+        entities.push(Object.assign({}, board[index], { type: 'player' }));
         return board[index].y * gameConstants.BOARD_WIDTH + board[index].x;
     }
-    const populateBoard = function(board) {
-        setEnemies(getEmptySpaces(board));
-        setWeapons(getEmptySpaces(board));
-        setHealth(getEmptySpaces(board));
-        setExit(getEmptySpaces(board));
-        let index = setPlayer(getEmptySpaces(board));
+    const populateBoard = function(board, entities, level) {
+        setEnemies(getEmptySpaces(board), entities, level);
+        setWeapons(getEmptySpaces(board), entities, level);
+        setHealth(getEmptySpaces(board), entities);
+        setExit(getEmptySpaces(board), entities);
+        let index = setPlayer(getEmptySpaces(board), entities);
         return index;
     }
     const getEmptySpaces = function(board) {
@@ -60,6 +60,7 @@ const GameService = (() => {
     const createBoard = function(level) {
 
         let board = [];
+        let entities = [];
         for (let i = 0; i < gameConstants.BOARD_HEIGHT; i++) {
             for (let j = 0; j < gameConstants.BOARD_WIDTH; j++) {
                 let cell = {};
@@ -73,8 +74,8 @@ const GameService = (() => {
             let room = gameConstants.levels[level].rooms[i];
             drawRoom(board, room.x, room.y, room.entry, room.exit);
         }
-        let playerPosition = populateBoard(board);
-        return [board, playerPosition];
+        let playerPosition = populateBoard(board, entities, level);
+        return [board, entities, playerPosition];
     }
 
     const movePlayer = function(direction, playerPosition, board) {
@@ -91,15 +92,26 @@ const GameService = (() => {
                 return playerPosition;
         }
     }
-    const updateBoard = function(board, index, playerOldPosition) {
-        const newBoard = [];
-        for (let i = 0; i < board.length; i++) {
-            newBoard[i] = Object.assign({}, board[i]);
+    const updateBoard = function(entities, cell) {
+        let newBoard = [].concat(entities);
+        let playerIndex = 0;
+        let cellIndex = null;
+        newBoard.forEach((entity, i) => {
+            if (entity.type === 'player') {
+                playerIndex = i;
+            }
+            if (entity.x === cell.x && entity.y === cell.y) {
+                cellIndex = i;
+            }
+        });
+        newBoard[playerIndex] = Object.assign({}, newBoard[playerIndex], { x: cell.x, y: cell.y });
+        if (cellIndex) {
+            newBoard.splice(cellIndex, 1);
         }
-        newBoard[index].type = "player";
-        newBoard[playerOldPosition].type = "floor";
         return newBoard;
     }
+
+
     return {
         createBoard: createBoard,
         movePlayer: movePlayer,
