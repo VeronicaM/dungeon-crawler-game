@@ -81,7 +81,7 @@ class App extends React.Component {
     render() {
         if(this.props.gameOver){
             return (  
-                <div>
+                <div className="endGame">
                     <div> {this.props.endGameMessage} </div>
                     <button onClick ={this.props.actions.startGame}> Restart Game </button>
                 </div> 

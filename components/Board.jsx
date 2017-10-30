@@ -10,31 +10,43 @@ const Board = (props) => {
     const board = props
         .board
         .map((cell, i) => {
+            let cellClass = "";
             let entity = props
                 .entities
                 .filter(entity => entity.x === cell.x && entity.y === cell.y);
-                if (entity.length !== 0) {
-                    return <span
-                        id={i}
-                        x={entity[0].x}
-                        y={entity[0].y}
-                        key={i}
-                        className={props.isDarkness
-                        ? ""
-                        : entity[0].type}></span>
+            let player = props
+                .entities
+                .filter(entity => entity.type === "player")[0];
+            let boss = props
+                .entities
+                .filter(entity => entity.type === "boss")[0];
+            if (props.isDarkness) {
+                if (cell.x <= (player.x + 4) && cell.x >= (player.x - 4) && cell.y >= (player.y - 4) && cell.y <= (player.y + 4)) {
+                    cellClass = "light";
                 } else {
-                    return <span
-                        id={i}
-                        x={cell.x}
-                        y={cell.y}
-                        key={i}
-                        className={props.isDarkness
-                        ? ""
-                        : cell.type}></span>
+                    cellClass = "dark";
                 }
             }
-
-        );
+            if (entity.length !== 0) {
+                return <span
+                    id={i}
+                    x={entity[0].x}
+                    y={entity[0].y}
+                    key={i}
+                    className={cellClass !== "light" && props.isDarkness
+                    ? ""
+                    : entity[0].type}></span>
+            } else {
+                return <span
+                    id={i}
+                    x={cell.x}
+                    y={cell.y}
+                    key={i}
+                    className={cellClass !== "light" && props.isDarkness
+                    ? ""
+                    : cell.type}></span>
+            }
+        });
     return (
         <div className ={darkness} tabIndex="0">
             {board}
