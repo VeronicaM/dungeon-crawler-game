@@ -5,7 +5,7 @@ const initialBoardSettings = GameService.createBoard(0);
 const initialState = {
     isDarkness: true,
     board: initialBoardSettings[0],
-    level: 0,
+    dungeon: 0,
     entities: initialBoardSettings[1],
     gameOver: false,
     player: {
@@ -42,10 +42,16 @@ export default function gameReducer(state = initialState, action) {
             }
         case types.TOGGLE_DARKNESS:
             return {...state, isDarkness: !state.isDarkness };
-        case types.UPDATE_GAME_LEVEL:
-            return {...state, level: state.level + 1 };
+        case types.NEXT_LEVEL:
+            const boardSettings = GameService.createBoard(state.dungeon + 1);
+            return {...state,
+                dungeon: state.dungeon + 1,
+                board: boardSettings[0],
+                entities: boardSettings[1],
+                player: {...state.player, position: boardSettings[2] }
+            };
         case types.CREATE_BOARD:
-            return {...state, board: GameService.createBoard(state.level) };
+            return {...state, board: GameService.createBoard(state.dungeon) };
         case types.MOVE_PLAYER:
             return {
                 ...state,

@@ -23,3 +23,6 @@ export function attackEnemy(cell) {
 export function startGame() {
     return { type: types.START_GAME };
 }
+export function nextLevel() {
+    return { type: types.NEXT_LEVEL };
+}

@@ -63,6 +63,9 @@ class App extends React.Component {
             case 'floor':
                  this.props.actions.setPlayerPosition(cell, cellIndex);
                  break;
+            case 'exit':
+                 this.props.actions.nextLevel();
+                 break;
             default:
                 break;
         }           
@@ -79,7 +82,7 @@ class App extends React.Component {
         }else
      return (
             <div className="mainContainer">
-                <Controls {...this.props.player} onToggle ={this.onToggleDarkness}/>
+                <Controls {...this.props.player} dungeon={this.props.dungeon} onToggle ={this.onToggleDarkness}/>
                 <Board
                      isDarkness ={this.props.isDarkness} 
                      board={this.props.board}
@@ -102,6 +105,7 @@ App.propTypes = {
 function mapStateToProps(state, props){
     return {
         player : state.game.player,
+        dungeon : state.game.dungeon,
         isDarkness: state.game.isDarkness,
         entities: state.game.entities,
         board : state.game.board,
