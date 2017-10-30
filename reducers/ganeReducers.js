@@ -8,6 +8,7 @@ const initialState = {
     dungeon: 0,
     entities: initialBoardSettings[1],
     gameOver: false,
+    endGameMessage: "Well done ! You won !",
     player: {
         health: 180,
         weapon: weapons[0].name,
@@ -61,8 +62,10 @@ export default function gameReducer(state = initialState, action) {
                     position: action.index
                 }
             }
+        case types.WIN:
+            return {...state, gameOver: true };
         case types.ATTACK_ENEMY:
-            return (state.player.health - action.cell.attack) === 0 ? {...state, gameOver: true } : {
+            return (state.player.health - action.cell.attack) === 0 ? {...state, gameOver: true, endGameMessage: "Game over, better luck next time !" } : {
                 ...state,
                 entities: GameService.attackEnemy(state.entities, action.cell, state.player.level, state.player.attack),
                 'player': {

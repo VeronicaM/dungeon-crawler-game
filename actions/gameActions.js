@@ -26,3 +26,6 @@ export function startGame() {
 export function nextLevel() {
     return { type: types.NEXT_LEVEL };
 }
+export function showWin() {
+    return { type: types.WIN };
+}

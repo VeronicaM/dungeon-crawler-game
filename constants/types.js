@@ -7,3 +7,4 @@ export const MOVE_PLAYER = "Move player";
 export const ATTACK_ENEMY = "Attack enemy";
 export const START_GAME = "Start Game";
 export const NEXT_LEVEL = "Next Level";
+export const WIN = "Win";

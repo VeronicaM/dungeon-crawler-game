@@ -8,9 +8,16 @@ export const weapons = [{
     name: "Short Sword",
     attack: 20
 }, {
+    name: "North Cross Blaster",
+    attack: 20
+}, {
     name: "Archangel's Sword",
     attack: 30
+}, {
+    name: "Sinigami's Sword",
+    attack: 30
 }];
+export const LAST_LEVEL = 4;
 export const levels = [{
         rooms: [{
                 x: [5, 25],

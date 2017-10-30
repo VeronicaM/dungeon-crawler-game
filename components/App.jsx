@@ -46,6 +46,12 @@ class App extends React.Component {
         cell = entity.length !==0 ? entity[0] : cell;
 
         switch (cell.type) {
+            case 'boss':
+                this.props.actions.attackEnemy(cell);
+                if(cell.health <= 0){
+                    this.props.actions.showWin();
+                }
+                break;
             case 'enemy':
                 this.props.actions.attackEnemy(cell);
                 if(cell.health <= 0){
@@ -66,6 +72,7 @@ class App extends React.Component {
             case 'exit':
                  this.props.actions.nextLevel();
                  break;
+            
             default:
                 break;
         }           
@@ -75,7 +82,7 @@ class App extends React.Component {
         if(this.props.gameOver){
             return (  
                 <div>
-                    <div> Game Over ! Better luck next time </div>
+                    <div> {this.props.endGameMessage} </div>
                     <button onClick ={this.props.actions.startGame}> Restart Game </button>
                 </div> 
             )
@@ -89,7 +96,6 @@ class App extends React.Component {
                      entities = {this.props.entities}
                      onPlayerMove = {this.onPlayerMove}
                 />
-
             </div>
         );
     }
@@ -109,7 +115,8 @@ function mapStateToProps(state, props){
         isDarkness: state.game.isDarkness,
         entities: state.game.entities,
         board : state.game.board,
-        gameOver : state.game.gameOver
+        gameOver : state.game.gameOver,
+        endGameMessage : state.game.endGameMessage
     };
 }
 function mapDispatchToProps(dispatch){
