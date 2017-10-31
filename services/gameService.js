@@ -39,12 +39,10 @@ const GameService = (() => {
         let x = board[index].x;
         let y = board[index].y;
         let found = false;
-
         entities.push(Object.assign({}, board[index], { type: 'boss', health: 100, attack: 20 }));
         entities.push(Object.assign({}, { x: x + 1, y: y, type: 'boss', health: 100, attack: 20 }));
         entities.push(Object.assign({}, { x: x, y: y + 1, type: 'boss', health: 100, attack: 20 }));
         entities.push(Object.assign({}, { x: x + 1, y: y + 1, type: 'boss', health: 100, attack: 20 }));
-
     };
     const setHealth = function(board, entities) {
         for (let i = 0; i < gameConstants.HEALTH_POINTS_PER_BOARD; i++) {
@@ -58,20 +56,20 @@ const GameService = (() => {
         return board[index].y * gameConstants.BOARD_WIDTH + board[index].x;
     };
     const populateBoard = function(board, entities, level) {
-        setEnemies(getEmptySpaces(board), entities, level);
-        setWeapons(getEmptySpaces(board), entities, level);
-        setHealth(getEmptySpaces(board), entities);
+        setEnemies(getEmptySpaces(board, entities), entities, level);
+        setWeapons(getEmptySpaces(board, entities), entities, level);
+        setHealth(getEmptySpaces(board, entities), entities);
         if (level !== gameConstants.LAST_LEVEL) {
-            setExit(getEmptySpaces(board), entities);
+            setExit(getEmptySpaces(board, entities), entities);
         }
-        let index = setPlayer(getEmptySpaces(board), entities);
-        if (level === 0) {
-            setBoss(getEmptySpaces(board), entities);
+        let index = setPlayer(getEmptySpaces(board, entities), entities);
+        if (level === gameConstants.LAST_LEVEL) {
+            setBoss(getEmptySpaces(board, entities), entities);
         }
         return index;
     };
-    const getEmptySpaces = function(board) {
-        return board.filter((cell) => cell.type === "floor");
+    const getEmptySpaces = function(board, entities) {
+        return board.filter((cell) => cell.type === "floor" && entities.filter(e => e.x === cell.x && e.y === cell.y).length === 0);
     };
     const createBoard = function(level) {
 
@@ -140,6 +138,14 @@ const GameService = (() => {
             }
         });
         let attack = playerAttack + 5 * playerLevel;
+        if (cell.type === "boss") {
+            newBoard.forEach((entity, i) => {
+                if (entity.type === "boss") {
+                    newBoard[i] = Object.assign({}, entity, { health: (entity.health - attack) });
+                }
+            });
+            return newBoard;
+        }
         newBoard[cellIndex] = Object.assign({}, newBoard[cellIndex], { health: (newBoard[cellIndex].health - attack) });
         return newBoard;
     };
