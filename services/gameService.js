@@ -36,7 +36,15 @@ const GameService = (() => {
     };
     const setBoss = function(board, entities) {
         let index = Math.floor(Math.random() * board.length);
+        let x = board[index].x;
+        let y = board[index].y;
+        let found = false;
+
         entities.push(Object.assign({}, board[index], { type: 'boss', health: 100, attack: 20 }));
+        entities.push(Object.assign({}, { x: x + 1, y: y, type: 'boss', health: 100, attack: 20 }));
+        entities.push(Object.assign({}, { x: x, y: y + 1, type: 'boss', health: 100, attack: 20 }));
+        entities.push(Object.assign({}, { x: x + 1, y: y + 1, type: 'boss', health: 100, attack: 20 }));
+
     };
     const setHealth = function(board, entities) {
         for (let i = 0; i < gameConstants.HEALTH_POINTS_PER_BOARD; i++) {
@@ -57,7 +65,7 @@ const GameService = (() => {
             setExit(getEmptySpaces(board), entities);
         }
         let index = setPlayer(getEmptySpaces(board), entities);
-        if (level === gameConstants.LAST_LEVEL) {
+        if (level === 0) {
             setBoss(getEmptySpaces(board), entities);
         }
         return index;

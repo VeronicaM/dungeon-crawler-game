@@ -17,9 +17,6 @@ const Board = (props) => {
             let player = props
                 .entities
                 .filter(entity => entity.type === "player")[0];
-            let boss = props
-                .entities
-                .filter(entity => entity.type === "boss")[0];
             if (props.isDarkness) {
                 if (cell.x <= (player.x + 4) && cell.x >= (player.x - 4) && cell.y >= (player.y - 4) && cell.y <= (player.y + 4)) {
                     cellClass = "light";

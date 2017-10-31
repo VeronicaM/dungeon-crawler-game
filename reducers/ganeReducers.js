@@ -1,7 +1,7 @@
 import * as types from '../constants/types.js';
 import { weapons } from '../constants/gameConstants.js';
 import GameService from '../services/gameService.js';
-const initialBoardSettings = GameService.createBoard(0);
+let initialBoardSettings = GameService.createBoard(0);
 const initialState = {
     isDarkness: true,
     board: initialBoardSettings[0],
@@ -22,7 +22,24 @@ const initialState = {
 export default function gameReducer(state = initialState, action) {
     switch (action.type) {
         case types.START_GAME:
-            return initialState;
+            initialBoardSettings = GameService.createBoard(0);
+            return {
+                isDarkness: true,
+                board: initialBoardSettings[0],
+                dungeon: 0,
+                entities: initialBoardSettings[1],
+                gameOver: false,
+                endGameMessage: "Well done ! You won !",
+                player: {
+                    health: 180,
+                    weapon: weapons[0].name,
+                    attack: weapons[0].attack,
+                    level: 0,
+                    nextLevel: 100,
+                    dungeon: 0,
+                    position: initialBoardSettings[2]
+                }
+            }
         case types.UPDATE_HEALTH:
             return {
                 ...state,
