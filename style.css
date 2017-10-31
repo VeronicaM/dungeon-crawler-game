@@ -1,0 +1,81 @@
+.mainContainer {
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around; }
+
+#root {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh; }
+.controls b {
+  padding: 10px; }
+
+.controls i {
+  padding: 10px; }
+
+.controls div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 100%; }
+.dark {
+  background-color: black; }
+
+.light {
+  background-color: transparent; }
+
+.enemy {
+  background-color: red; }
+
+.health {
+  background-color: green; }
+
+.weapon {
+  background-color: orange; }
+
+.exit {
+  background-color: purple; }
+
+.player {
+  background-color: blue; }
+
+.boss {
+  background-color: darkred; }
+
+.wall {
+  background-color: gray; }
+
+.floor {
+  background-color: pink; }
+
+.board {
+  width: 800px;
+  height: 400px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
+  .board span {
+    width: 10px;
+    height: 10px;
+    display: inline-block; }
